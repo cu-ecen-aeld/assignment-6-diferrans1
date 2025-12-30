@@ -33,15 +33,15 @@ do_compile () {
 }
 
 do_install () {
+	# Required folders
 	install -d ${D}${bindir}
-	install -m 0755 ${S}/aesdsocket ${D}${bindir}/
-	# TODO: Install your binaries/scripts here.
-	# Be sure to install the target directory with install -d first
-	# Yocto variables ${D} and ${S} are useful here, which you can read about at 
-	# https://docs.yoctoproject.org/ref-manual/variables.html?highlight=workdir#term-D
-	# and
-	# https://docs.yoctoproject.org/ref-manual/variables.html?highlight=workdir#term-S
-	# See example at https://github.com/cu-ecen-aeld/ecen5013-yocto/blob/ecen5013-hello-world/meta-ecen5013/recipes-ecen5013/ecen5013-hello-world/ecen5013-hello-world_git.bb
+	install -d ${D}${sysconfdir}/rcS.d 
+	install -d ${D}${sysconfdir}/init.d
+
+    # Required files for the aesdsocket
+	install -m 0755 ${S}/aesdsocket ${D}${bindir}/ 
+	install -m 0755 ${S}/aesdsocket-start-stop ${D}${sysconfdir}/init.d/
+    ln -rs ${D}${sysconfdir}/init.d/aesdsocket-start-stop ${D}${sysconfdir}/rcS.d/S39aedsocket.sh
 }
 
-FILES:${PN} += "${bindir}/aesdsocket"
+FILES:${PN} += "${bindir}/aesdsocket ${sysconfdir}/init.d/aesdsocket-start-stop ${sysconfdir}/rcS.d/S39aedsocket.sh"
