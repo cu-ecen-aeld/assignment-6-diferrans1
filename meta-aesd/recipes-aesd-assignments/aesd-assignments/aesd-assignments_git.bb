@@ -8,7 +8,7 @@ SRC_URI = "git://git@github.com/cu-ecen-aeld/assignments-3-and-later-diferrans1;
 
 PV = "1.0+git${SRCPV}"
 # TODO: set to reference a specific commit hash in your assignment repo
-SRCREV = "c211b77fbf9d7233acaeacf9d3d0197d6a5599fa"
+SRCREV = "e3562c3ee092e09c410fa7783b437ae2612ac7ef"
 
 # This sets your staging directory based on WORKDIR, where WORKDIR is defined at 
 # https://docs.yoctoproject.org/ref-manual/variables.html?highlight=workdir#term-WORKDIR
@@ -21,6 +21,7 @@ S = "${WORKDIR}/git/server"
 #FILES:${PN} += "${bindir}/aesdsocket"
 # TODO: customize these as necessary for any libraries you need for your application
 # (and remove comment)
+EXTRA_OEMAKE += "CROSS_COMPILE=${TARGET_PREFIX}"
 TARGET_LDFLAGS += "-pthread -lrt"
 
 do_configure () {
@@ -28,7 +29,7 @@ do_configure () {
 }
 
 do_compile () {
-	oe_runmake
+	oe_runmake CC="${CC}" LD="${LD}" CFLAGS="${CFLAGS}" LDFLAGS="${LDFLAGS} ${TARGET_LDFLAGS}"
 }
 
 do_install () {
