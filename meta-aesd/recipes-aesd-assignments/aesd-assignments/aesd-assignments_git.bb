@@ -41,7 +41,7 @@ do_install () {
     # Required files for the aesdsocket
 	install -m 0755 ${S}/aesdsocket ${D}${bindir}/ 
 	install -m 0755 ${S}/aesdsocket-start-stop ${D}${sysconfdir}/init.d/
-    ln -rs ${D}${sysconfdir}/init.d/aesdsocket-start-stop ${D}${sysconfdir}/rcS.d/S39aedsocket.sh
+    ln -rs ${D}${sysconfdir}/init.d/aesdsocket-start-stop ${D}${sysconfdir}/rcS.d/S39aesdsocket.sh
 }
 
-FILES:${PN} += "${bindir}/aesdsocket ${sysconfdir}/init.d/aesdsocket-start-stop ${sysconfdir}/rcS.d/S39aedsocket.sh"
+FILES:${PN} += "${bindir}/aesdsocket ${sysconfdir}/init.d/aesdsocket-start-stop ${sysconfdir}/rcS.d/S39aesdsocket.sh"
